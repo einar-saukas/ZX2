@@ -1,9 +1,9 @@
 # ZX2
 
-**ZX2** is a minimalist version of [ZX0](https://github.com/einar-saukas/ZX0)
-and [ZX1](https://github.com/einar-saukas/ZX1). It's intended to help 
-compressing programs and data blocks so small that saving a few bytes in the
-decompressor itself can make a difference (for instance to create 1Kb demos).
+**ZX2** is a minimalist version of [ZX1](https://github.com/einar-saukas/ZX1). 
+It's intended to help compressing programs and data blocks so small that saving 
+a few bytes in the decompressor itself can make a difference (for instance to 
+create 1Kb demos).
 
 
 ## Usage
