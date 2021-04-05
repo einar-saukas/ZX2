@@ -329,6 +329,19 @@ used **ZX2**.
 
 ## Links
 
+## Links
+
+**ZX2** ported to other platforms:
+
+* [DEC PDP11](https://github.com/ivagorRetrocomp/DeZX)
+
+* [Intel 8080](https://github.com/ivagorRetrocomp/DeZX)
+
+Tools supporting **ZX2**:
+
+* [z88dk](http://www.z88dk.org/) - The main C compiler for Z80 machines, that
+provides built-in support for **ZX0**, **ZX1**, **ZX2**, and **ZX7**.
+
 Related projects (by the same author):
 
 * [ZX0](https://github.com/einar-saukas/ZX0) - The original compressor on
