@@ -279,13 +279,13 @@ each level using "generic.gfx" as a 230 bytes suffix, use the command-line
 compressor as follows:
 
 ```
-copy /b "level_1.gfx+generic.gfx level_1_suffixed.gfx
+copy /b level_1.gfx+generic.gfx level_1_suffixed.gfx
 zx2 -b +230 level_1_suffixed.gfx
 
-copy /b "level_2.gfx+generic.gfx level_2_suffixed.gfx
+copy /b level_2.gfx+generic.gfx level_2_suffixed.gfx
 zx2 -b +230 level_2_suffixed.gfx
 
-copy /b "level_3.gfx+generic.gfx level_3_suffixed.gfx
+copy /b level_3.gfx+generic.gfx level_3_suffixed.gfx
 zx2 -b +230 level_3_suffixed.gfx
 ```
 
