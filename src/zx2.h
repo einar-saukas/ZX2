@@ -42,6 +42,6 @@ BLOCK *allocate(int bits, int index, int offset, int length, BLOCK *chain);
 
 void assign(BLOCK **ptr, BLOCK *chain);
 
-BLOCK *optimize(unsigned char *input_data, int input_size, int skip, int offset_limit, int default_offset, int min_length);
+BLOCK *optimize(unsigned char *input_data, int input_size, int skip, int offset_limit, int last_offset, int min_length);
 
-unsigned char *compress(BLOCK *optimal, unsigned char *input_data, int input_size, int skip, int backwards_mode, int default_offset, int min_length, int limited_length, int *output_size, int *delta);
+unsigned char *compress(BLOCK *optimal, unsigned char *input_data, int input_size, int skip, int backwards_mode, int last_offset, int min_length, int limited_length, int *output_size, int *delta);

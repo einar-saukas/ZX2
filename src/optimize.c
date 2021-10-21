@@ -39,7 +39,7 @@ int elias_gamma_bits(int value) {
     return bits;
 }
 
-BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_limit, int default_offset, int min_length) {
+BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_limit, int last_offset, int min_length) {
     BLOCK **last_literal;
     BLOCK **last_match;
     BLOCK **optimal;
@@ -56,9 +56,9 @@ BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_
     /* allocate all main data structures at once */
     last_literal = (BLOCK **)calloc(max_offset+1, sizeof(BLOCK *));
     last_match = (BLOCK **)calloc(max_offset+1, sizeof(BLOCK *));
-    optimal = (BLOCK **)calloc(input_size+1, sizeof(BLOCK *));
+    optimal = (BLOCK **)calloc(input_size, sizeof(BLOCK *));
     match_length = (int *)calloc(max_offset+1, sizeof(int));
-    best_length = (int *)malloc((input_size+1)*sizeof(int));
+    best_length = (int *)malloc(input_size*sizeof(int));
     if (!last_literal || !last_match || !optimal || !match_length || !best_length) {
          fprintf(stderr, "Error: Insufficient memory\n");
          exit(1);
@@ -66,13 +66,13 @@ BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_
     best_length[min_length] = min_length;
 
     /* start with fake block */
-    assign(&last_match[default_offset], allocate(-1, skip-1, default_offset, 0, NULL));
+    assign(&last_match[last_offset], allocate(-1, skip-1, last_offset, 0, NULL));
 
     /* process remaining bytes */
     for (index = skip; index < input_size; index++) {
         best_length_size = min_length;
         max_offset = offset_ceiling(index, offset_limit);
-        for (offset = default_offset; offset <= max_offset; offset++) {
+        for (offset = last_offset; offset <= max_offset; offset++) {
             if (offset && index != skip && index >= offset && input_data[index] == input_data[index-offset]) {
                 /* copy from last offset */
                 if (last_literal[offset]) {

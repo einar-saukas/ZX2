@@ -45,7 +45,7 @@ int main(int argc, char *argv[]) {
     int skip = 0;
     int forced_mode = FALSE;
     int backwards_mode = FALSE;
-    int default_offset = INITIAL_OFFSET;
+    int last_offset = INITIAL_OFFSET;
     int min_length = 2;
     int limited_length = FALSE;
     char *output_name;
@@ -62,14 +62,14 @@ int main(int argc, char *argv[]) {
 
     printf("ZX2 v1.0: Optimal data compressor by Einar Saukas\n");
 
-    /* process hidden optional parameters */
+    /* process optional parameters */
     for (i = 1; i < argc && (*argv[i] == '-' || *argv[i] == '+'); i++) {
         if (!strcmp(argv[i], "-f")) {
             forced_mode = TRUE;
         } else if (!strcmp(argv[i], "-b")) {
             backwards_mode = TRUE;
         } else if (!strcmp(argv[i], "-z")) {
-            default_offset = 0;
+            last_offset = 0;
         } else if (!strcmp(argv[i], "-x")) {
             min_length = 1;
         } else if (!strcmp(argv[i], "-y")) {
@@ -158,7 +158,7 @@ int main(int argc, char *argv[]) {
         reverse(input_data, input_data+input_size-1);
 
     /* generate output file */
-    output_data = compress(optimize(input_data, input_size, skip, MAX_OFFSET_ZX2, default_offset, min_length), input_data, input_size, skip, backwards_mode, default_offset, min_length, limited_length, &output_size, &delta);
+    output_data = compress(optimize(input_data, input_size, skip, MAX_OFFSET_ZX2, last_offset, min_length), input_data, input_size, skip, backwards_mode, last_offset, min_length, limited_length, &output_size, &delta);
 
     /* conditionally reverse output file */
     if (backwards_mode)

@@ -28,7 +28,6 @@ int bit_mask;
 int bit_value;
 int backtrack;
 int last_byte;
-int last_offset;
 
 int read_byte() {
     if (input_index == partial_counter) {
@@ -98,7 +97,7 @@ void write_bytes(int offset, int length) {
     }
 }
 
-void decompress(int default_offset, int min_length, int limited_length) {
+void decompress(int last_offset, int min_length, int limited_length) {
     int length;
     int i;
 
@@ -116,23 +115,19 @@ void decompress(int default_offset, int min_length, int limited_length) {
     output_size = 0;
     bit_mask = 0;
     backtrack = FALSE;
-    last_offset = default_offset;
 
 COPY_LITERALS:
     length = read_interlaced_elias_gamma(limited_length);
-    for (i = 0; i < length; i++) {
+    for (i = 0; i < length; i++)
         write_byte(read_byte());
-    }
-    if (read_bit()) {
+    if (read_bit())
         goto COPY_FROM_NEW_OFFSET;
-    }
 
 /*COPY_FROM_LAST_OFFSET:*/
     length = read_interlaced_elias_gamma(limited_length);
     write_bytes(last_offset, length);
-    if (!read_bit()) {
+    if (!read_bit())
         goto COPY_LITERALS;
-    }
 
 COPY_FROM_NEW_OFFSET:
     last_offset = 255-read_byte();                   
@@ -146,16 +141,15 @@ COPY_FROM_NEW_OFFSET:
     }
     length = read_interlaced_elias_gamma(limited_length)+min_length-1;
     write_bytes(last_offset, length);
-    if (read_bit()) {
+    if (read_bit())
         goto COPY_FROM_NEW_OFFSET;
-    } else {
+    else
         goto COPY_LITERALS;
-    }
 }
 
 int main(int argc, char *argv[]) {
     int forced_mode = FALSE;
-    int default_offset = INITIAL_OFFSET;
+    int last_offset = INITIAL_OFFSET;
     int min_length = 2;
     int limited_length = FALSE;
     int i;
@@ -167,7 +161,7 @@ int main(int argc, char *argv[]) {
         if (!strcmp(argv[i], "-f")) {
             forced_mode = TRUE;
         } else if (!strcmp(argv[i], "-z")) {
-            default_offset = 0;
+            last_offset = 0;
         } else if (!strcmp(argv[i], "-x")) {
             min_length = 1;
         } else if (!strcmp(argv[i], "-y")) {
@@ -224,7 +218,7 @@ int main(int argc, char *argv[]) {
     }
 
     /* generate output file */
-    decompress(default_offset, min_length, limited_length);
+    decompress(last_offset, min_length, limited_length);
 
     /* close input file */
     fclose(ifp);
