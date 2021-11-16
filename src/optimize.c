@@ -63,7 +63,8 @@ BLOCK* optimize(unsigned char *input_data, int input_size, int skip, int offset_
          fprintf(stderr, "Error: Insufficient memory\n");
          exit(1);
     }
-    best_length[min_length] = min_length;
+    if (input_size > min_length)
+        best_length[min_length] = min_length;
 
     /* start with fake block */
     assign(&last_match[last_offset], allocate(-1, skip-1, last_offset, 0, NULL));

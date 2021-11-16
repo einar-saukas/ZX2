@@ -154,7 +154,7 @@ int main(int argc, char *argv[]) {
     int limited_length = FALSE;
     int i;
 
-    printf("DZX2 v1.0: Data decompressor by Einar Saukas\n");
+    printf("DZX2 v1.1: Data decompressor by Einar Saukas\n");
     
     /* process hidden optional parameters */
     for (i = 1; i < argc && *argv[i] == '-'; i++) {
